@@ -2,8 +2,13 @@ const service = require("./movies.service");
 const asyncErrorBoundary = require("../errors/asyncErrorBoundary");
 
 async function list(req, res, next) {
-  const data = await service.list();
-  res.json({ data });
+  if (req.query.is_showing === "true") {
+    const data = await service.inTheaters();
+    res.json({ data });
+  } else {
+    const data = await service.list();
+    res.json({ data });
+  }
 }
 
 async function movieExists(req, res, next) {
@@ -33,6 +38,7 @@ async function listReviews(req, res, next) {
 
 module.exports = {
   list: [asyncErrorBoundary(list)],
+  inTheaters: [asyncErrorBoundary(this.inTheaters)],
   read: [asyncErrorBoundary(movieExists), read],
   listTheaters: [asyncErrorBoundary(listTheaters)],
   listReviews: [asyncErrorBoundary(listReviews)],
