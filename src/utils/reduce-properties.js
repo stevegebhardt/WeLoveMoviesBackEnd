@@ -52,7 +52,6 @@ function reduceProperties(uniqueField, configuration) {
         configuration,
         rowObject
       );
-
       const rowMapper = mapProperties(rowMapConfiguration);
       accumulator[key] = lodash.merge(rowObject, rowMapper(row));
       return accumulator;
